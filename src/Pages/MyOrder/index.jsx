@@ -1,5 +1,5 @@
 function MyOrder() {
-  return <div>MyOrder</div>;
+  return <div className="bg-slate-500">MyOrder</div>;
 }
 
 export default MyOrder;

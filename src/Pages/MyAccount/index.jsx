@@ -1,5 +1,5 @@
 function MyAccount() {
-  return <div>MyAccount</div>;
+  return <div className="bg-slate-500">MyAccount</div>;
 }
 
 export default MyAccount;
