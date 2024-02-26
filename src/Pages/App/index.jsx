@@ -1,10 +1,5 @@
 // React Router
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
+import { BrowserRouter, useRoutes } from "react-router-dom";
 
 // Components
 import Home from "../Home";
@@ -13,24 +8,31 @@ import MyOrder from "../MyOrder";
 import SignIn from "../SignIn";
 import MyOrders from "../MyOrders";
 import NotFound from "../NotFound";
+import Navbar from "../../Components/Navbar";
 
 //Styles
 import "./App.css";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route index element={<Home />} />
-      <Route path="MyAccount" element={<MyAccount />} />
-      <Route path="MyOrder" element={<MyOrder />} />
-      <Route path="SignIn" element={<SignIn />} />
-      <Route path="MyOrders" element={<MyOrders />} />
-      <Route path="*" element={<NotFound />} />
-    </Route>
-  )
-);
-function App() {
-  return <RouterProvider router={router} />;
-}
+const AppRoutes = () => {
+  let routes = useRoutes([
+    { path: "/", element: <Home /> },
+    { path: "/MyAccountt", element: <MyAccount /> },
+    { path: "/MyOrder", element: <MyOrder /> },
+    { path: "/SignIn", element: <SignIn /> },
+    { path: "/MyOrders", element: <MyOrders /> },
+    { path: "/*", element: <NotFound /> },
+  ]);
+
+  return routes;
+};
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+      <Navbar />
+    </BrowserRouter>
+  );
+};
 
 export default App;
