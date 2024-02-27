@@ -1,5 +1,7 @@
+import Layout from "../../Components/Layout/index";
+
 function MyOrders() {
-  return <div className="bg-slate-500">MyOrders</div>;
+  return <Layout className="bg-slate-500">MyOrders</Layout>;
 }
 
 export default MyOrders;

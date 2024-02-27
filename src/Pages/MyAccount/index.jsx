@@ -1,5 +1,7 @@
+import Layout from "../../Components/Layout/index";
+
 function MyAccount() {
-  return <div className="bg-slate-500">MyAccount</div>;
+  return <Layout className="bg-slate-500">MyAccount</Layout>;
 }
 
 export default MyAccount;

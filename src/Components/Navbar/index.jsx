@@ -5,8 +5,8 @@ function Navbar() {
   const activeStyle = "underline underline-offset-4";
 
   return (
-    <nav className="flex items-center justify-between w-full py-5 px-8 text-sm">
-      <ul className="flex gap-3 items-center">
+    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm">
+      <ul className="flex items-center gap-3 ">
         <li className="font-semibold text-lg">
           <NavLink to="/" style={{ activeStyle }}>
             Shopi

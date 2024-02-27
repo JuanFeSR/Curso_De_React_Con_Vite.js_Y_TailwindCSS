@@ -1,5 +1,7 @@
+import Layout from "../../Components/Layout/index";
+
 function SignIn() {
-  return <div className="bg-slate-500">SignIn</div>;
+  return <Layout className="bg-slate-500">SignIn</Layout>;
 }
 
 export default SignIn;
