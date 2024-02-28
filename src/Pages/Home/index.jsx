@@ -1,19 +1,9 @@
 import Layout from "../../Components/Layout/index";
 import Card from "../../Components/Card/index";
-import { useEffect, useState } from "react";
-import productServices from "../../api/ProductsApi/index";
+import { useStoreContext } from "../../Context/StoreContext";
 
 function Home() {
-  const [products, setProducts] = useState(null);
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    const response = await productServices.getProducts();
-    setProducts(response);
-  };
+  const { products } = useStoreContext();
 
   return (
     <Layout className="bg-slate-500">

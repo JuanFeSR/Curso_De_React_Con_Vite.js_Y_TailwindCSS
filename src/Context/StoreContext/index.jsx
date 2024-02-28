@@ -1,11 +1,27 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import productServices from "../../api/ProductsApi/index";
+import PropTypes from "prop-types";
 
-const StoreContext = createContext();
+export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
-  const value = useMemo(() => {
-    "value";
-  });
+  const [products, setProducts] = useState(null);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    const response = await productServices.getProducts();
+    setProducts(response);
+  };
+  const value = useMemo(
+    () => ({
+      products,
+      setProducts,
+    }),
+    [products, setProducts]
+  );
 
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
@@ -13,9 +29,13 @@ export const StoreProvider = ({ children }) => {
 };
 
 export const useStoreContext = () => {
-  const useStoreContext = useContext(StoreContext);
-  if (!useStoreContext) {
-    throw new Error("useStoreContext error");
+  const context = useContext(StoreContext);
+  if (!context) {
+    throw new Error("useStore debe ser usado dentro de un StoreProvider");
   }
-  return useStoreContext;
+  return context;
+};
+
+StoreProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
