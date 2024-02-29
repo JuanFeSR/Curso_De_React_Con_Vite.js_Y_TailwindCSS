@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
+import { useStoreContext } from "../../Context/StoreContext";
 
 const Card = ({ product }) => {
+  const { counter, setCounter } = useStoreContext();
+
   return (
     <div className="bg-white cursor-pointer w-56 h-60">
       <figure className="relative mb-2 w-full h-4/5">
@@ -12,9 +15,12 @@ const Card = ({ product }) => {
           src={product.image}
           alt={product.title}
         ></img>
-        <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1">
+        <button
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+          onClick={() => setCounter(counter + 1)}
+        >
           +
-        </div>
+        </button>
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{product.title}</span>

@@ -12,7 +12,6 @@ const accountLinks = [
   { name: "MyOrders", to: "/MyOrders", className: "" },
   { name: "MyAccount", to: "/MyAccount", className: "" },
   { name: "SignIn", to: "/SignIn", className: "" },
-  { name: "Carrito", to: "/Carrito", className: "" },
 ];
 
 export { sections, accountLinks };

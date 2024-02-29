@@ -6,6 +6,7 @@ export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
   const [products, setProducts] = useState(null);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     getProducts();
@@ -19,8 +20,10 @@ export const StoreProvider = ({ children }) => {
     () => ({
       products,
       setProducts,
+      counter,
+      setCounter,
     }),
-    [products, setProducts]
+    [products, setProducts, counter, setCounter]
   );
 
   return (

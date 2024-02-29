@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { sections, accountLinks } from "./InitialValues";
+import { useStoreContext } from "../../Context/StoreContext";
 
 function Navbar() {
+  const { counter } = useStoreContext();
   const activeStyle = "underline underline-offset-4";
 
   return (
@@ -34,6 +36,9 @@ function Navbar() {
             </NavLink>
           </li>
         ))}
+        <NavLink to="/Carrito" style={{ activeStyle }}>
+          Carrito {counter}
+        </NavLink>
       </ul>
     </nav>
   );
