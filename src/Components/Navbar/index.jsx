@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { sections, accountLinks } from "./InitialValues";
 import { useStoreContext } from "../../Context/StoreContext";
+import { FaShoppingCart } from "react-icons/fa";
 
 function Navbar() {
   const { counter } = useStoreContext();
@@ -37,7 +38,9 @@ function Navbar() {
           </li>
         ))}
         <NavLink to="/Carrito" style={{ activeStyle }}>
-          Carrito {counter}
+          <div className="flex justify-between gap-2">
+            <FaShoppingCart /> {counter}
+          </div>
         </NavLink>
       </ul>
     </nav>

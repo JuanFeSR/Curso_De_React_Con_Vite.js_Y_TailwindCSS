@@ -1,6 +1,7 @@
 import Layout from "../../Components/Layout/index";
 import Card from "../../Components/Card/index";
 import { useStoreContext } from "../../Context/StoreContext";
+import ProductDetail from "../../Components/ProductDetail";
 
 function Home() {
   const { products } = useStoreContext();
@@ -13,6 +14,7 @@ function Home() {
           <Card key={product.id} product={product} />
         ))}
       </div>
+      <ProductDetail />
     </Layout>
   );
 }
