@@ -1,3 +1,4 @@
+import { FaPlus } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useStoreContext } from "../../Context/StoreContext";
 
@@ -19,7 +20,7 @@ const Card = ({ product }) => {
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
           onClick={() => setCounter(counter + 1)}
         >
-          +
+          <FaPlus />
         </button>
       </figure>
       <p className="flex justify-between">
