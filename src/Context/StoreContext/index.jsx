@@ -8,6 +8,7 @@ export const StoreProvider = ({ children }) => {
   const [products, setProducts] = useState(null);
   const [counter, setCounter] = useState(0);
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  const [productToShow, setProductToShow] = useState({});
 
   useEffect(() => {
     getProducts();
@@ -30,6 +31,8 @@ export const StoreProvider = ({ children }) => {
       isProductDetailOpen,
       setIsProductDetailOpen,
       toggleProductDetail,
+      productToShow,
+      setProductToShow,
     }),
     [
       products,
@@ -38,6 +41,8 @@ export const StoreProvider = ({ children }) => {
       setCounter,
       isProductDetailOpen,
       setIsProductDetailOpen,
+      productToShow,
+      setProductToShow,
     ]
   );
 

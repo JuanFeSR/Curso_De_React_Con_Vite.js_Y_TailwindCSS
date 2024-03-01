@@ -3,7 +3,8 @@ import "./styles.css";
 import { useStoreContext } from "../../Context/StoreContext";
 
 const ProductDetail = () => {
-  const { isProductDetailOpen, toggleProductDetail } = useStoreContext();
+  const { isProductDetailOpen, toggleProductDetail, productToShow } =
+    useStoreContext();
 
   return (
     <aside
@@ -13,10 +14,26 @@ const ProductDetail = () => {
     >
       <div className="flex justify-between items-center p-6 ">
         <h2 className="font-medium text-xl">Detail</h2>
-        <button onClick={toggleProductDetail}>
-          <IoMdCloseCircleOutline size={24} />
-        </button>
+        <IoMdCloseCircleOutline
+          className="cursor-pointer"
+          onClick={toggleProductDetail}
+          size={24}
+        />
       </div>
+      <figure className="px-6">
+        <img
+          className="w-full h-full rounded-lg"
+          src={productToShow.image}
+          alt={productToShow.title}
+        />
+      </figure>
+      <p className="flex flex-col p-6">
+        <span className="font-medium text-md">{productToShow.title}</span>
+        <span className="font-medium text-2xl my-2">
+          ${productToShow.price}
+        </span>
+        <span className="font-light text-sm">{productToShow.description}</span>
+      </p>
     </aside>
   );
 };
