@@ -7,6 +7,7 @@ export const StoreContext = createContext();
 export const StoreProvider = ({ children }) => {
   const [products, setProducts] = useState(null);
   const [counter, setCounter] = useState(0);
+  const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
 
   useEffect(() => {
     getProducts();
@@ -16,14 +17,28 @@ export const StoreProvider = ({ children }) => {
     const response = await productServices.getProducts();
     setProducts(response);
   };
+
+  const toggleProductDetail = () =>
+    setIsProductDetailOpen(!isProductDetailOpen);
+
   const value = useMemo(
     () => ({
       products,
       setProducts,
       counter,
       setCounter,
+      isProductDetailOpen,
+      setIsProductDetailOpen,
+      toggleProductDetail,
     }),
-    [products, setProducts, counter, setCounter]
+    [
+      products,
+      setProducts,
+      counter,
+      setCounter,
+      isProductDetailOpen,
+      setIsProductDetailOpen,
+    ]
   );
 
   return (
