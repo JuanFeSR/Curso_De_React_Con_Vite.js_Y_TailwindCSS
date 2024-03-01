@@ -13,6 +13,8 @@ export const StoreProvider = ({ children }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   // Open/ Close - Product Detail
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  // Open/ Close - Checkout Side Menu
+  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   // Show product - Product Detail
   const [productToShow, setProductToShow] = useState({});
 
@@ -28,6 +30,9 @@ export const StoreProvider = ({ children }) => {
   const toggleProductDetail = () =>
     setIsProductDetailOpen(!isProductDetailOpen);
 
+  const toggleCheckoutSideMenu = () =>
+    setIsCheckoutSideMenuOpen(!isCheckoutSideMenuOpen);
+
   const value = useMemo(
     () => ({
       products,
@@ -41,6 +46,9 @@ export const StoreProvider = ({ children }) => {
       setProductToShow,
       selectedProducts,
       setSelectedProducts,
+      isCheckoutSideMenuOpen,
+      setIsCheckoutSideMenuOpen,
+      toggleCheckoutSideMenu,
     }),
     [
       products,
@@ -53,6 +61,8 @@ export const StoreProvider = ({ children }) => {
       setProductToShow,
       selectedProducts,
       setSelectedProducts,
+      isCheckoutSideMenuOpen,
+      setIsCheckoutSideMenuOpen,
     ]
   );
 

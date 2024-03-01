@@ -9,6 +9,7 @@ import SignIn from "../SignIn";
 import MyOrders from "../MyOrders";
 import NotFound from "../NotFound";
 import Navbar from "../../Components/Navbar";
+import CheckoutSideMenu from "../../Components/CheckoutSideMenu";
 
 //Styles
 import "./App.css";
@@ -31,6 +32,7 @@ const App = () => {
     <BrowserRouter>
       <AppRoutes />
       <Navbar />
+      <CheckoutSideMenu />
     </BrowserRouter>
   );
 };

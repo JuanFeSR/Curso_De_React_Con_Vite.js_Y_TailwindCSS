@@ -1,6 +1,6 @@
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import "./styles.css";
 import { useStoreContext } from "../../Context/StoreContext";
+import "./styles.css";
 
 const ProductDetail = () => {
   const { isProductDetailOpen, toggleProductDetail, productToShow } =

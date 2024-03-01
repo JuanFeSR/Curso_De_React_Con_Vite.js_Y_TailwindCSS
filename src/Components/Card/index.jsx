@@ -10,6 +10,7 @@ const Card = ({ product }) => {
     setProductToShow,
     selectedProducts,
     setSelectedProducts,
+    toggleCheckoutSideMenu,
   } = useStoreContext();
 
   const showProduct = (productDetail) => {
@@ -17,8 +18,10 @@ const Card = ({ product }) => {
     setProductToShow(productDetail);
   };
 
-  const addProductsToCart = (productData) => {
+  const addProductsToCart = (e, productData) => {
     setSelectedProducts([...selectedProducts, productData]);
+    toggleCheckoutSideMenu();
+    console.log("CART: ", selectedProducts);
   };
 
   return (
@@ -40,7 +43,7 @@ const Card = ({ product }) => {
           onClick={(e) => {
             e.stopPropagation();
             setCounter(counter + 1);
-            addProductsToCart(product);
+            addProductsToCart(e, product);
           }}
         />
       </figure>
