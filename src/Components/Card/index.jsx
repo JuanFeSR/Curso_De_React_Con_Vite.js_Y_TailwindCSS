@@ -3,12 +3,22 @@ import PropTypes from "prop-types";
 import { useStoreContext } from "../../Context/StoreContext";
 
 const Card = ({ product }) => {
-  const { counter, setCounter, toggleProductDetail, setProductToShow } =
-    useStoreContext();
+  const {
+    counter,
+    setCounter,
+    toggleProductDetail,
+    setProductToShow,
+    selectedProducts,
+    setSelectedProducts,
+  } = useStoreContext();
 
   const showProduct = (productDetail) => {
     toggleProductDetail();
     setProductToShow(productDetail);
+  };
+
+  const addProductsToCart = (productData) => {
+    setSelectedProducts([...selectedProducts, productData]);
   };
 
   return (
@@ -30,6 +40,7 @@ const Card = ({ product }) => {
           onClick={(e) => {
             e.stopPropagation();
             setCounter(counter + 1);
+            addProductsToCart(product);
           }}
         />
       </figure>

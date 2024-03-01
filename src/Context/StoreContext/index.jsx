@@ -5,9 +5,15 @@ import PropTypes from "prop-types";
 export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
+  // Products from API
   const [products, setProducts] = useState(null);
+  // Increment quantity - Shopping Cart
   const [counter, setCounter] = useState(0);
+  // Add selected products to cart - Shoping Cart
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  // Open/ Close - Product Detail
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  // Show product - Product Detail
   const [productToShow, setProductToShow] = useState({});
 
   useEffect(() => {
@@ -33,6 +39,8 @@ export const StoreProvider = ({ children }) => {
       toggleProductDetail,
       productToShow,
       setProductToShow,
+      selectedProducts,
+      setSelectedProducts,
     }),
     [
       products,
@@ -43,6 +51,8 @@ export const StoreProvider = ({ children }) => {
       setIsProductDetailOpen,
       productToShow,
       setProductToShow,
+      selectedProducts,
+      setSelectedProducts,
     ]
   );
 
