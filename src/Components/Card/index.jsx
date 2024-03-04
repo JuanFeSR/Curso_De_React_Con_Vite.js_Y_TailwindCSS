@@ -1,4 +1,4 @@
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaCheckCircle } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useStoreContext } from "../../Context/StoreContext";
 
@@ -23,6 +23,28 @@ const Card = ({ product }) => {
     toggleCheckoutSideMenu();
   };
 
+  const renderIcon = (id) => {
+    const isInCart =
+      selectedProducts.filter((product) => product.id === id).length > 0;
+
+    if (isInCart) {
+      return (
+        <FaCheckCircle className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1" />
+      );
+    } else {
+      return (
+        <FaPlus
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+          onClick={(e) => {
+            e.stopPropagation();
+            setCounter(counter + 1);
+            addProductsToCart(e, product);
+          }}
+        />
+      );
+    }
+  };
+
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg "
@@ -37,14 +59,7 @@ const Card = ({ product }) => {
           src={product.image}
           alt={product.title}
         ></img>
-        <FaPlus
-          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={(e) => {
-            e.stopPropagation();
-            setCounter(counter + 1);
-            addProductsToCart(e, product);
-          }}
-        />
+        {renderIcon(product.id)}
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{product.title}</span>

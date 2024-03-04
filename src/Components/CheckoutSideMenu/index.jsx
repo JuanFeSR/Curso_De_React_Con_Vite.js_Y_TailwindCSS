@@ -21,7 +21,7 @@ const CheckoutSideMenu = () => {
           size={24}
         />
       </div>
-      <div className="px-6">
+      <div className="px-6 overflow-y-scroll">
         {selectedProducts.map((product) => (
           <OrderCards
             key={product.id}
