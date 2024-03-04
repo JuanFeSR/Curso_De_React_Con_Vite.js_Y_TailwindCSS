@@ -10,6 +10,9 @@ const CheckoutSideMenu = () => {
     toggleCheckoutSideMenu,
     selectedProducts,
     setSelectedProducts,
+    order,
+    setOrder,
+    setCounter,
   } = useStoreContext();
 
   const handleDelete = (id) => {
@@ -17,6 +20,18 @@ const CheckoutSideMenu = () => {
       (product) => product.id != id
     );
     setSelectedProducts(filteredProducts);
+  };
+
+  const handleCheckout = () => {
+    const orderToAdd = {
+      date: "01/02/23",
+      products: selectedProducts,
+      totalProducts: selectedProducts.length,
+      totalPrice: totalPrice(selectedProducts),
+    };
+    setOrder([...order, orderToAdd]);
+    setSelectedProducts([]);
+    setCounter(0);
   };
 
   return (
@@ -33,7 +48,7 @@ const CheckoutSideMenu = () => {
           size={24}
         />
       </div>
-      <div className="px-6 overflow-y-scroll">
+      <div className="px-6 overflow-y-scroll flex-1">
         {selectedProducts.map((product) => (
           <OrderCards
             key={product.id}
@@ -45,13 +60,19 @@ const CheckoutSideMenu = () => {
           />
         ))}
       </div>
-      <div className="px-6 ">
-        <p className="flex justify-between items-center">
+      <div className="px-6 mb-6">
+        <p className="flex justify-between items-center mb-2">
           <span className="font-light">Total:</span>
           <span className="font-medium text-2xl">
             ${totalPrice(selectedProducts)}
           </span>
         </p>
+        <button
+          className="w-full bg-black py-3 text-white rounded-lg"
+          onClick={() => handleCheckout()}
+        >
+          Checkout
+        </button>
       </div>
     </aside>
   );

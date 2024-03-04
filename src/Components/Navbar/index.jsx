@@ -4,7 +4,7 @@ import { sections, accountLinks } from "./InitialValues";
 import { useStoreContext } from "../../Context/StoreContext";
 
 function Navbar() {
-  const { counter } = useStoreContext();
+  const { selectedProducts } = useStoreContext();
   const activeStyle = "underline underline-offset-4";
 
   return (
@@ -37,11 +37,13 @@ function Navbar() {
             </NavLink>
           </li>
         ))}
-        <NavLink to="/Carrito" style={{ activeStyle }}>
-          <div className="flex justify-between items-center gap-2">
-            <FaShoppingCart /> {counter}
-          </div>
-        </NavLink>
+        <li>
+          <NavLink to="/Carrito" style={{ activeStyle }}>
+            <div className="flex justify-between items-center gap-2">
+              <FaShoppingCart /> {selectedProducts.length}
+            </div>
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

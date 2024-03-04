@@ -12,6 +12,8 @@ export const StoreProvider = ({ children }) => {
   const [counter, setCounter] = useState(0);
   // Add selected products to cart - Shoping Cart
   const [selectedProducts, setSelectedProducts] = useState([]);
+  // Order - Shoping Cart
+  const [order, setOrder] = useState([]);
   // Open/ Close - Product Detail
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   // Open/ Close - Checkout Side Menu
@@ -50,6 +52,8 @@ export const StoreProvider = ({ children }) => {
       isCheckoutSideMenuOpen,
       setIsCheckoutSideMenuOpen,
       toggleCheckoutSideMenu,
+      order,
+      setOrder,
     }),
     [
       products,
@@ -64,6 +68,8 @@ export const StoreProvider = ({ children }) => {
       setSelectedProducts,
       isCheckoutSideMenuOpen,
       setIsCheckoutSideMenuOpen,
+      order,
+      setOrder,
     ]
   );
 

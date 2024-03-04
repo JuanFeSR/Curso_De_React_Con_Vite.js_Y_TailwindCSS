@@ -4,8 +4,6 @@ import { useStoreContext } from "../../Context/StoreContext";
 
 const Card = ({ product }) => {
   const {
-    counter,
-    setCounter,
     toggleProductDetail,
     setProductToShow,
     selectedProducts,
@@ -37,7 +35,6 @@ const Card = ({ product }) => {
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
           onClick={(e) => {
             e.stopPropagation();
-            setCounter(counter + 1);
             addProductsToCart(e, product);
           }}
         />
