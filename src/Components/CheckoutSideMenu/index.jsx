@@ -2,6 +2,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useStoreContext } from "../../Context/StoreContext";
 import "./styles.css";
 import OrderCards from "../OrderCards";
+import { totalPrice } from "../../Utilities";
 
 const CheckoutSideMenu = () => {
   const {
@@ -43,6 +44,14 @@ const CheckoutSideMenu = () => {
             handleDelete={handleDelete}
           />
         ))}
+      </div>
+      <div className="px-6 ">
+        <p className="flex justify-between items-center">
+          <span className="font-light">Total:</span>
+          <span className="font-medium text-2xl">
+            ${totalPrice(selectedProducts)}
+          </span>
+        </p>
       </div>
     </aside>
   );
