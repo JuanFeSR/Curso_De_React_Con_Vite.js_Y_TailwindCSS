@@ -4,8 +4,19 @@ import "./styles.css";
 import OrderCards from "../OrderCards";
 
 const CheckoutSideMenu = () => {
-  const { isCheckoutSideMenuOpen, toggleCheckoutSideMenu, selectedProducts } =
-    useStoreContext();
+  const {
+    isCheckoutSideMenuOpen,
+    toggleCheckoutSideMenu,
+    selectedProducts,
+    setSelectedProducts,
+  } = useStoreContext();
+
+  const handleDelete = (id) => {
+    const filteredProducts = selectedProducts.filter(
+      (product) => product.id != id
+    );
+    setSelectedProducts(filteredProducts);
+  };
 
   return (
     <aside
@@ -25,9 +36,11 @@ const CheckoutSideMenu = () => {
         {selectedProducts.map((product) => (
           <OrderCards
             key={product.id}
+            id={product.id}
             title={product.title}
             image={product.image}
             price={product.price}
+            handleDelete={handleDelete}
           />
         ))}
       </div>
