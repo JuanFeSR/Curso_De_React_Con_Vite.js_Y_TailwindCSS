@@ -7,6 +7,7 @@ export const StoreContext = createContext();
 export const StoreProvider = ({ children }) => {
   // Products from API
   const [products, setProducts] = useState(null);
+  /* console.log("API info", products); */
   // Increment quantity - Shopping Cart
   const [counter, setCounter] = useState(0);
   // Add selected products to cart - Shoping Cart

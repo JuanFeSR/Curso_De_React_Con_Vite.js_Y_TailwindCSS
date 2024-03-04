@@ -21,7 +21,6 @@ const Card = ({ product }) => {
   const addProductsToCart = (e, productData) => {
     setSelectedProducts([...selectedProducts, productData]);
     toggleCheckoutSideMenu();
-    console.log("CART: ", selectedProducts);
   };
 
   return (

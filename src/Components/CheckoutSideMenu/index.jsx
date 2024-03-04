@@ -1,9 +1,11 @@
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useStoreContext } from "../../Context/StoreContext";
 import "./styles.css";
+import OrderCards from "../OrderCards";
 
 const CheckoutSideMenu = () => {
-  const { isCheckoutSideMenuOpen, toggleCheckoutSideMenu } = useStoreContext();
+  const { isCheckoutSideMenuOpen, toggleCheckoutSideMenu, selectedProducts } =
+    useStoreContext();
 
   return (
     <aside
@@ -18,6 +20,16 @@ const CheckoutSideMenu = () => {
           onClick={toggleCheckoutSideMenu}
           size={24}
         />
+      </div>
+      <div className="px-6">
+        {selectedProducts.map((product) => (
+          <OrderCards
+            key={product.id}
+            title={product.title}
+            image={product.image}
+            price={product.price}
+          />
+        ))}
       </div>
     </aside>
   );
