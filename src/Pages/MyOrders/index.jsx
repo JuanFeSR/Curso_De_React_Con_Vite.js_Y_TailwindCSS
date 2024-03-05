@@ -11,15 +11,14 @@ function MyOrders() {
       <div className="flex w-80 items-center justify-center relative ">
         <h1>My Orders</h1>
       </div>
-      {order.map((order, index) => {
-        <Link key={index} to={`MyOrders/${order.id}`}>
+      {order.map((order, index) => (
+        <Link key={index} to={`${index}`}>
           <MyOrdersCard
             totalProducts={order.totalProducts}
             totalPrice={order.totalPrice}
           />
-          ;
-        </Link>;
-      })}
+        </Link>
+      ))}
     </Layout>
   );
 }
