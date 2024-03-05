@@ -18,11 +18,16 @@ const OrderCards = (props) => {
       </div>
       <div className="flex items-center gap-2">
         <p className="text-lg font-medium ">${price} </p>
-        <FaRegTrashAlt
-          className="cursor-pointer"
-          onClick={() => handleDelete(id)}
-        />
-        {/* Agregar Hover rojo. Ver clase: Componente OrderCard para estilos CSS en comentarios. */}
+        {
+          handleDelete && (
+            <FaRegTrashAlt
+              className="cursor-pointer"
+              onClick={() => handleDelete(id)}
+            />
+          )
+          /* Agregar Hover rojo. Ver clase: Componente OrderCard para estilos CSS
+        en comentarios. */
+        }
       </div>
     </div>
   );

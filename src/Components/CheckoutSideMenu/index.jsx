@@ -3,6 +3,7 @@ import { useStoreContext } from "../../Context/StoreContext";
 import "./styles.css";
 import OrderCards from "../OrderCards";
 import { totalPrice } from "../../Utilities";
+import { Link } from "react-router-dom";
 
 const CheckoutSideMenu = () => {
   const {
@@ -32,6 +33,7 @@ const CheckoutSideMenu = () => {
     setOrder([...order, orderToAdd]);
     setSelectedProducts([]);
     setCounter(0);
+    toggleCheckoutSideMenu();
   };
 
   return (
@@ -67,12 +69,14 @@ const CheckoutSideMenu = () => {
             ${totalPrice(selectedProducts)}
           </span>
         </p>
-        <button
-          className="w-full bg-black py-3 text-white rounded-lg"
-          onClick={() => handleCheckout()}
-        >
-          Checkout
-        </button>
+        <Link to={"/MyOrders/last"}>
+          <button
+            className="w-full bg-black py-3 text-white rounded-lg"
+            onClick={() => handleCheckout()}
+          >
+            Checkout
+          </button>
+        </Link>
       </div>
     </aside>
   );
