@@ -8,7 +8,7 @@ function MyOrders() {
 
   return (
     <Layout className="bg-slate-500">
-      <div className="flex w-80 items-center justify-center relative ">
+      <div className="flex w-80 items-center justify-center relative mb-4">
         <h1>My Orders</h1>
       </div>
       {order.map((order, index) => (
