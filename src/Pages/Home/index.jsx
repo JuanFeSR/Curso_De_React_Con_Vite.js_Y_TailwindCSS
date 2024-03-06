@@ -4,7 +4,21 @@ import { useStoreContext } from "../../Context/StoreContext";
 import ProductDetail from "../../Components/ProductDetail";
 
 function Home() {
-  const { products, setSearchByTitle } = useStoreContext();
+  const { products, searchByTitle, setSearchByTitle, filteredProducts } =
+    useStoreContext();
+
+  const renderView = () => {
+    const productsToRender =
+      searchByTitle?.length > 0 ? filteredProducts : products;
+
+    if (productsToRender?.length > 0) {
+      return productsToRender.map((product) => (
+        <Card key={product.id} product={product} />
+      ));
+    } else {
+      return <p>¡No Results Found!</p>;
+    }
+  };
 
   return (
     <Layout>
@@ -18,9 +32,7 @@ function Home() {
         onChange={(e) => setSearchByTitle(e.target.value)}
       />
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-        {products?.map((product) => (
-          <Card key={product.id} product={product} />
-        ))}
+        {renderView()}
       </div>
       <ProductDetail />
     </Layout>

@@ -20,9 +20,10 @@ export const StoreProvider = ({ children }) => {
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   // Show product - Product Detail
   const [productToShow, setProductToShow] = useState({});
+  // Filtered products
+  const [filteredProducts, setFilteredProducts] = useState(null);
   // Search products by title
   const [searchByTitle, setSearchByTitle] = useState(null);
-  console.log("searchByTitlesearchByTitle", searchByTitle);
 
   useEffect(() => {
     getProducts();
@@ -32,6 +33,17 @@ export const StoreProvider = ({ children }) => {
     const response = await productServices.getProducts();
     setProducts(response);
   };
+
+  const filteredProductsByTitle = (products, searchByTitle) => {
+    return products?.filter((product) =>
+      product.title.toLowerCase().includes(searchByTitle.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
+    if (searchByTitle)
+      setFilteredProducts(filteredProductsByTitle(products, searchByTitle));
+  }, [products, searchByTitle]);
 
   const toggleProductDetail = () =>
     setIsProductDetailOpen(!isProductDetailOpen);
@@ -59,6 +71,8 @@ export const StoreProvider = ({ children }) => {
       setOrder,
       searchByTitle,
       setSearchByTitle,
+      filteredProducts,
+      setFilteredProducts,
     }),
     [
       products,
@@ -77,6 +91,8 @@ export const StoreProvider = ({ children }) => {
       setOrder,
       searchByTitle,
       setSearchByTitle,
+      filteredProducts,
+      setFilteredProducts,
     ]
   );
 
