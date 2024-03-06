@@ -20,6 +20,9 @@ export const StoreProvider = ({ children }) => {
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   // Show product - Product Detail
   const [productToShow, setProductToShow] = useState({});
+  // Search products by title
+  const [searchByTitle, setSearchByTitle] = useState(null);
+  console.log("searchByTitlesearchByTitle", searchByTitle);
 
   useEffect(() => {
     getProducts();
@@ -54,6 +57,8 @@ export const StoreProvider = ({ children }) => {
       toggleCheckoutSideMenu,
       order,
       setOrder,
+      searchByTitle,
+      setSearchByTitle,
     }),
     [
       products,
@@ -70,6 +75,8 @@ export const StoreProvider = ({ children }) => {
       setIsCheckoutSideMenuOpen,
       order,
       setOrder,
+      searchByTitle,
+      setSearchByTitle,
     ]
   );
 
