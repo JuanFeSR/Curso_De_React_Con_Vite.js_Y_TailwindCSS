@@ -1,11 +1,11 @@
-const sections = [
-  { name: "All", to: "/", className: "" },
-  { name: "Clothes", to: "/Clothes", className: "" },
-  { name: "Electronics", to: "/Electronics", className: "" },
-  { name: "Furnitures", to: "/Furnitures", className: "" },
-  { name: "Toys", to: "/Toys", className: "" },
-  { name: "Others", to: "/Others", className: "" },
-];
+/* const sections = [
+  { name: "All", className: "" },
+  { name: "Men's Clothing", className: "" },
+  { name: "Women's Clothing", to: "/:Category", className: "" },
+  { name: "Electronics", to: "/:Category", className: "" },
+  { name: "Jewlery", to: "/:Category", className: "" },
+  { name: "Others", to: "/:Category", className: "" },
+]; */
 
 const accountLinks = [
   { name: "juanfesr01@gmail.com", to: "/Profile", className: "text-black/60" },
@@ -14,4 +14,4 @@ const accountLinks = [
   { name: "SignIn", to: "/SignIn", className: "" },
 ];
 
-export { sections, accountLinks };
+export { /* sections */ accountLinks };

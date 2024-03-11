@@ -1,14 +1,25 @@
 import axios from "axios";
 
-const url = "https://fakestoreapi.com/products";
+const apiUrl = "https://fakestoreapi.com";
 
 const getProducts = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(`${apiUrl}/products`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("Error getting products:", error);
+    throw error;
   }
 };
 
-export default { getProducts };
+const getCategories = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/products/categories`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting categories:", error);
+    throw error;
+  }
+};
+
+export default { getProducts, getCategories };

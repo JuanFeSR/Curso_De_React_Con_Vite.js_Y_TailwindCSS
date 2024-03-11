@@ -1,27 +1,46 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { sections, accountLinks } from "./InitialValues";
+import { /* sections, */ accountLinks } from "./InitialValues";
 import { useStoreContext } from "../../Context/StoreContext";
 
 function Navbar() {
-  const { selectedProducts } = useStoreContext();
+  const {
+    selectedProducts,
+    categories,
+    setSearchByCategory,
+    toggleCheckoutSideMenu,
+  } = useStoreContext();
   const activeStyle = "underline underline-offset-4";
 
   return (
     <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm">
       <ul className="flex items-center gap-3 ">
         <li className="font-semibold text-lg">
-          <NavLink to="/" style={{ activeStyle }}>
+          <NavLink
+            to="/"
+            onClick={() => setSearchByCategory(null)}
+            style={{ activeStyle }}
+          >
             Shopi
           </NavLink>
         </li>
-        {sections.map((section) => (
-          <li key={section.name} className={section.className}>
+        <li>
+          <NavLink
+            to={"/"}
+            onClick={() => setSearchByCategory(null)}
+            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            All
+          </NavLink>
+        </li>
+        {categories.map((category) => (
+          <li key={category} className="capitalize">
             <NavLink
-              to={section.to}
+              to={`/${category}`}
+              onClick={() => setSearchByCategory(category)}
               className={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
-              {section.name}
+              {category}
             </NavLink>
           </li>
         ))}
@@ -38,11 +57,10 @@ function Navbar() {
           </li>
         ))}
         <li>
-          <NavLink to="/Carrito" style={{ activeStyle }}>
-            <div className="flex justify-between items-center gap-2">
-              <FaShoppingCart /> {selectedProducts.length}
-            </div>
-          </NavLink>
+          <div className="flex justify-between items-center gap-2 cursor-pointer">
+            <FaShoppingCart onClick={() => toggleCheckoutSideMenu()} />
+            {selectedProducts.length}
+          </div>
         </li>
       </ul>
     </nav>

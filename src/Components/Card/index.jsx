@@ -8,8 +8,10 @@ const Card = ({ product }) => {
     setProductToShow,
     selectedProducts,
     setSelectedProducts,
-    toggleCheckoutSideMenu,
+    setIsCheckoutSideMenuOpen,
   } = useStoreContext();
+
+  const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
 
   const showProduct = (productDetail) => {
     toggleProductDetail();
@@ -18,7 +20,7 @@ const Card = ({ product }) => {
 
   const addProductsToCart = (e, productData) => {
     setSelectedProducts([...selectedProducts, productData]);
-    toggleCheckoutSideMenu();
+    openCheckoutSideMenu();
   };
 
   const renderIcon = (id) => {

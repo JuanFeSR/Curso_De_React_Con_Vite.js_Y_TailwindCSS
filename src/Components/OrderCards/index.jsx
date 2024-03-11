@@ -21,11 +21,11 @@ const OrderCards = (props) => {
         {
           handleDelete && (
             <FaRegTrashAlt
-              className="cursor-pointer"
+              className="cursor-pointer hover:text-red-600"
               onClick={() => handleDelete(id)}
             />
           )
-          /* Agregar Hover rojo. Ver clase: Componente OrderCard para estilos CSS
+          /* Ver clase: Componente OrderCard para estilos CSS
         en comentarios. */
         }
       </div>

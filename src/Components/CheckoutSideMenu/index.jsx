@@ -13,7 +13,7 @@ const CheckoutSideMenu = () => {
     setSelectedProducts,
     order,
     setOrder,
-    setCounter,
+    setSearchByTitle,
   } = useStoreContext();
 
   const handleDelete = (id) => {
@@ -25,15 +25,15 @@ const CheckoutSideMenu = () => {
 
   const handleCheckout = () => {
     const orderToAdd = {
-      date: "01/02/23",
+      date: "",
       products: selectedProducts,
       totalProducts: selectedProducts.length,
       totalPrice: totalPrice(selectedProducts),
     };
     setOrder([...order, orderToAdd]);
     setSelectedProducts([]);
-    setCounter(0);
     toggleCheckoutSideMenu();
+    setSearchByTitle(null);
   };
 
   return (
@@ -69,14 +69,23 @@ const CheckoutSideMenu = () => {
             ${totalPrice(selectedProducts)}
           </span>
         </p>
-        <Link to={"/MyOrders/last"}>
+        {selectedProducts.length > 0 ? (
+          <Link to={"/MyOrders/last"}>
+            <button
+              className="w-full bg-black py-3 text-white rounded-lg"
+              onClick={() => handleCheckout()}
+            >
+              Checkout
+            </button>
+          </Link>
+        ) : (
           <button
-            className="w-full bg-black py-3 text-white rounded-lg"
-            onClick={() => handleCheckout()}
+            className="w-full bg-gray-400 py-3 text-white rounded-lg cursor-not-allowed"
+            disabled
           >
             Checkout
           </button>
-        </Link>
+        )}
       </div>
     </aside>
   );
