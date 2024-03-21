@@ -4,21 +4,7 @@ import { useStoreContext } from "../../Context/StoreContext";
 import ProductDetail from "../../Components/ProductDetail";
 
 function Home() {
-  const { /* products, searchByTitle, */ setSearchByTitle, filteredProducts } =
-    useStoreContext();
-
-  /* const renderView = () => {
-    const productsToRender =
-      searchByTitle?.length > 0 ? filteredProducts : products;
-
-    if (productsToRender?.length > 0) {
-      return productsToRender.map((product) => (
-        <Card key={product.id} product={product} />
-      ));
-    } else {
-      return <p>¡No Results Found!</p>;
-    }
-  }; */
+  const { setSearchByTitle, filteredProducts } = useStoreContext();
 
   const renderView = () => {
     if (filteredProducts?.length > 0) {
@@ -32,17 +18,17 @@ function Home() {
 
   return (
     <Layout>
-      <div className="flex w-80 items-center justify-center relative mb-4">
-        <h1 className="font-medium text-xl">Exlusive Products</h1>
+      <div className="flex w-80 items-center justify-center my-4">
+        <h1 className="font-medium text-xl">Exclusive Products</h1>
       </div>
       <input
         type="text"
         placeholder="Search a product"
-        className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+        className="rounded-lg border border-black w-80 p-2 mb-4 focus:outline-none"
         onChange={(e) => setSearchByTitle(e.target.value)}
       />
 
-      <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+      <div className="grid gap-4 grid-cols-4 items-stretch w-full max-w-screen-lg">
         {renderView()}
       </div>
       <ProductDetail />

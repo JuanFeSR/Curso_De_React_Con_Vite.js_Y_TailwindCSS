@@ -43,7 +43,7 @@ const CheckoutSideMenu = () => {
       } checkoutSideMenu  flex-col fixed right-0 border border-black rounded-lg bg-white`}
     >
       <div className="flex justify-between items-center p-6 ">
-        <h2 className="font-medium text-xl">My Order</h2>
+        <h2 className="text-xl font-bold text-green-500">My Order</h2>
         <IoMdCloseCircleOutline
           className="cursor-pointer"
           onClick={toggleCheckoutSideMenu}
@@ -64,8 +64,8 @@ const CheckoutSideMenu = () => {
       </div>
       <div className="px-6 mb-6">
         <p className="flex justify-between items-center mb-2">
-          <span className="font-light">Total:</span>
-          <span className="font-medium text-2xl">
+          <span className="font-light ">Total:</span>
+          <span className="font-medium text-2xl text-green-500">
             ${totalPrice(selectedProducts)}
           </span>
         </p>

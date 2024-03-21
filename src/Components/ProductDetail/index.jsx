@@ -13,7 +13,7 @@ const ProductDetail = () => {
       } productDetail  flex-col fixed right-0 border border-black rounded-lg bg-white`}
     >
       <div className="flex justify-between items-center p-6 ">
-        <h2 className="font-medium text-xl">Detail</h2>
+        <h2 className="text-xl font-bold text-green-500  ">Detail</h2>
         <IoMdCloseCircleOutline
           className="cursor-pointer"
           onClick={toggleProductDetail}
@@ -28,11 +28,13 @@ const ProductDetail = () => {
         />
       </figure>
       <p className="flex flex-col p-6">
-        <span className="font-medium text-md">{productToShow.title}</span>
+        <span className="text-lg font-semibold">{productToShow.title}</span>
         <span className="font-medium text-2xl my-2">
           ${productToShow.price}
         </span>
-        <span className="font-light text-sm">{productToShow.description}</span>
+        <span className="font-light text-sm text-justify">
+          {productToShow.description}
+        </span>
       </p>
     </aside>
   );

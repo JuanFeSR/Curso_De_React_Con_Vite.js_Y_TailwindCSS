@@ -1,6 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { /* sections, */ accountLinks } from "./InitialValues";
+import { accountLinks } from "./InitialValues";
 import { useStoreContext } from "../../Context/StoreContext";
 
 function Navbar() {
@@ -13,7 +13,7 @@ function Navbar() {
   const activeStyle = "underline underline-offset-4";
 
   return (
-    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm">
+    <nav className="flex justify-between items-center fixed z-10 top-0 left-0 w-full py-5 px-8 text-sm border-b-1 bg-white shadow-lg">
       <ul className="flex items-center gap-3 ">
         <li className="font-semibold text-lg">
           <NavLink
@@ -56,10 +56,15 @@ function Navbar() {
             </NavLink>
           </li>
         ))}
-        <li>
+        <li className="relative">
           <div className="flex justify-between items-center gap-2 cursor-pointer">
-            <FaShoppingCart onClick={() => toggleCheckoutSideMenu()} />
-            {selectedProducts.length}
+            <FaShoppingCart
+              className="w-4 h-4"
+              onClick={() => toggleCheckoutSideMenu()}
+            />
+            <div className="absolute top-0 right-0 -mt-2 -mr-3 flex justify-center items-center w-4 h-4 bg-green-500 rounded-full text-white text-xs font-semibold ">
+              {selectedProducts.length}
+            </div>
           </div>
         </li>
       </ul>

@@ -5,29 +5,29 @@ const OrderCards = (props) => {
   const { id, title, image, price, handleDelete } = props;
 
   return (
-    <div className="flex justify-between items-center mb-3">
-      <div className="flex items-center gap-2">
-        <figure className="w-20 h-20">
+    <div className="relative bg-gray-200 rounded-lg p-2 mb-3">
+      <div className="flex items-start">
+        <figure className="w-14 h-20 bg-white rounded-lg mr-2">
           <img
-            className="w-full h-full rounded-lg object-cover"
+            className="w-full h-full object-contain"
             src={image}
             alt={title}
           />
         </figure>
-        <p className="text-sm font-light ">{title} </p>
+        <div className="py-1 w-3/5">
+          <p className="text-sm font-light line-clamp-2">{title}</p>
+        </div>
       </div>
-      <div className="flex items-center gap-2">
-        <p className="text-lg font-medium ">${price} </p>
-        {
-          handleDelete && (
-            <FaRegTrashAlt
-              className="cursor-pointer hover:text-red-600"
-              onClick={() => handleDelete(id)}
-            />
-          )
-          /* Ver clase: Componente OrderCard para estilos CSS
-        en comentarios. */
-        }
+      <div className="absolute top-2 right-2">
+        {handleDelete && (
+          <FaRegTrashAlt
+            className="cursor-pointer hover:text-red-600"
+            onClick={() => handleDelete(id)}
+          />
+        )}
+      </div>
+      <div className="absolute bottom-2 right-2">
+        <p className="text-lg font-medium text-green-500">${price}</p>
       </div>
     </div>
   );
