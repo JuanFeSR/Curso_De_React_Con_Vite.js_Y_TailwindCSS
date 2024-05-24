@@ -1,6 +1,5 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { accountLinks } from "./InitialValues";
 import { useStoreContext } from "../../Context/StoreContext";
 
 function Navbar() {
@@ -9,8 +8,74 @@ function Navbar() {
     categories,
     setSearchByCategory,
     toggleCheckoutSideMenu,
+    setSignOut,
+    signOut,
   } = useStoreContext();
   const activeStyle = "underline underline-offset-4";
+
+  // Sign Out
+
+  const isSignOut = localStorage.getItem("signOut");
+  const parsedSignOut = JSON.parse(isSignOut);
+  const isUserSignOut = signOut || parsedSignOut;
+
+  const handleSignOut = () => {
+    const stringifiedSignOut = JSON.stringify(true);
+    localStorage.setItem("signOut", stringifiedSignOut);
+    setSignOut(true);
+  };
+
+  const accountLinks = [
+    {
+      name: "juanfesr01@gmail.com",
+      to: "/Profile",
+      className: "text-black/60",
+    },
+    { name: "MyOrders", to: "/MyOrders", className: "" },
+    { name: "MyAccount", to: "/MyAccount", className: "" },
+  ];
+
+  const renderView = () => {
+    if (isUserSignOut) {
+      return (
+        <li>
+          <NavLink
+            to={"SignIn"}
+            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => handleSignOut()}
+          >
+            Sign Out
+          </NavLink>
+        </li>
+      );
+    } else {
+      return (
+        <>
+          {accountLinks.map((link) => (
+            <li key={link.name} className={link.className}>
+              <NavLink
+                to={link.to}
+                className={({ isActive }) =>
+                  isActive ? activeStyle : undefined
+                }
+              >
+                {link.name}
+              </NavLink>
+            </li>
+          ))}
+          <li>
+            <NavLink
+              to={"SignIn"}
+              className={({ isActive }) => (isActive ? activeStyle : undefined)}
+              onClick={() => handleSignOut()}
+            >
+              Sign Out
+            </NavLink>
+          </li>
+        </>
+      );
+    }
+  };
 
   return (
     <nav className="flex justify-between items-center fixed z-10 top-0 left-0 w-full py-5 px-8 text-sm border-b-1 bg-white shadow-lg">
@@ -46,16 +111,7 @@ function Navbar() {
         ))}
       </ul>
       <ul className="flex gap-3 items-center">
-        {accountLinks.map((link) => (
-          <li key={link.name} className={link.className}>
-            <NavLink
-              to={link.to}
-              className={({ isActive }) => (isActive ? activeStyle : undefined)}
-            >
-              {link.name}
-            </NavLink>
-          </li>
-        ))}
+        {renderView()}
         <li className="relative">
           <div className="flex justify-between items-center gap-2 cursor-pointer">
             <FaShoppingCart

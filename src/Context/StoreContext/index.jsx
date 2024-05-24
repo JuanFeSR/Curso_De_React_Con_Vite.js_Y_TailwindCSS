@@ -4,26 +4,59 @@ import PropTypes from "prop-types";
 
 export const StoreContext = createContext();
 
+export const initializeLocalStorage = () => {
+  const accountInLocalStorage = localStorage.getItem("account");
+  const signOutInLocalStorage = localStorage.getItem("signOut");
+  let parsedAccount;
+  let parsedSignOut;
+
+  if (!accountInLocalStorage) {
+    localStorage.setItem("account", JSON.stringify({}));
+    parsedAccount = {};
+  } else {
+    parsedAccount = JSON.parse(accountInLocalStorage);
+  }
+
+  if (!signOutInLocalStorage) {
+    localStorage.setItem("signOut", JSON.stringify(false));
+    parsedSignOut = false;
+  } else {
+    parsedSignOut = JSON.parse(signOutInLocalStorage);
+  }
+};
+
 export const StoreProvider = ({ children }) => {
+  // My Account
+  const [account, setAccount] = useState({});
+  // Sign Out
+  const [signOut, setSignOut] = useState(false);
+
   // Products from API
   const [products, setProducts] = useState(null);
   // console.log("API info", products);
+
   // Categories from API
   const [categories, setCategories] = useState([]);
+
   // Add selected products to cart - Shoping Cart
   const [selectedProducts, setSelectedProducts] = useState([]);
   // Order - Shoping Cart
   const [order, setOrder] = useState([]);
+
   // Open/ Close - Product Detail
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
-  // Open/ Close - Checkout Side Menu
-  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   // Show product - Product Detail
   const [productToShow, setProductToShow] = useState({});
+
+  // Open/ Close - Checkout Side Menu
+  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
+
   // Filtered products
   const [filteredProducts, setFilteredProducts] = useState(null);
+
   // Search products by title
   const [searchByTitle, setSearchByTitle] = useState(null);
+
   // Search products by category
   const [searchByCategory, setSearchByCategory] = useState(null);
 
@@ -130,6 +163,10 @@ export const StoreProvider = ({ children }) => {
       setSearchByCategory,
       categories,
       setCategories,
+      account,
+      setAccount,
+      signOut,
+      setSignOut,
     }),
     [
       products,
@@ -152,6 +189,10 @@ export const StoreProvider = ({ children }) => {
       setSearchByCategory,
       categories,
       setCategories,
+      account,
+      setAccount,
+      signOut,
+      setSignOut,
     ]
   );
 
