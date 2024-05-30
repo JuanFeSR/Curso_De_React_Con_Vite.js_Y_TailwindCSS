@@ -8,26 +8,15 @@ function Navbar() {
     categories,
     setSearchByCategory,
     toggleCheckoutSideMenu,
-    setSignOut,
-    signOut,
+    handleSignOut,
+    isAuthenticated,
+    account,
   } = useStoreContext();
   const activeStyle = "underline underline-offset-4";
 
-  // Sign Out
-
-  const isSignOut = localStorage.getItem("signOut");
-  const parsedSignOut = JSON.parse(isSignOut);
-  const isUserSignOut = signOut || parsedSignOut;
-
-  const handleSignOut = () => {
-    const stringifiedSignOut = JSON.stringify(true);
-    localStorage.setItem("signOut", stringifiedSignOut);
-    setSignOut(true);
-  };
-
   const accountLinks = [
     {
-      name: "juanfesr01@gmail.com",
+      name: account.email || "User",
       to: "/Profile",
       className: "text-black/60",
     },
@@ -36,7 +25,7 @@ function Navbar() {
   ];
 
   const renderView = () => {
-    if (isUserSignOut) {
+    if (!isAuthenticated) {
       return (
         <li>
           <NavLink
@@ -44,7 +33,7 @@ function Navbar() {
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
             onClick={() => handleSignOut()}
           >
-            Sign Out
+            Sign In
           </NavLink>
         </li>
       );
@@ -64,13 +53,9 @@ function Navbar() {
             </li>
           ))}
           <li>
-            <NavLink
-              to={"SignIn"}
-              className={({ isActive }) => (isActive ? activeStyle : undefined)}
-              onClick={() => handleSignOut()}
-            >
+            <button onClick={() => handleSignOut()} className={activeStyle}>
               Sign Out
-            </NavLink>
+            </button>
           </li>
         </>
       );

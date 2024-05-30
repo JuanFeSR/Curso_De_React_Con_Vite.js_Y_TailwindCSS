@@ -1,35 +1,15 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import productServices from "../../api/ProductsApi/index";
 import PropTypes from "prop-types";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 export const StoreContext = createContext();
-
-export const initializeLocalStorage = () => {
-  const accountInLocalStorage = localStorage.getItem("account");
-  const signOutInLocalStorage = localStorage.getItem("signOut");
-  let parsedAccount;
-  let parsedSignOut;
-
-  if (!accountInLocalStorage) {
-    localStorage.setItem("account", JSON.stringify({}));
-    parsedAccount = {};
-  } else {
-    parsedAccount = JSON.parse(accountInLocalStorage);
-  }
-
-  if (!signOutInLocalStorage) {
-    localStorage.setItem("signOut", JSON.stringify(false));
-    parsedSignOut = false;
-  } else {
-    parsedSignOut = JSON.parse(signOutInLocalStorage);
-  }
-};
 
 export const StoreProvider = ({ children }) => {
   // My Account
   const [account, setAccount] = useState({});
-  // Sign Out
-  const [signOut, setSignOut] = useState(false);
+  // Athentication
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Products from API
   const [products, setProducts] = useState(null);
@@ -61,19 +41,33 @@ export const StoreProvider = ({ children }) => {
   const [searchByCategory, setSearchByCategory] = useState(null);
 
   useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+        setAccount(user);
+      } else {
+        setIsAuthenticated(false);
+        setAccount({});
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const response = await productServices.getProducts();
+      setProducts(response);
+    };
+
+    const getCategories = async () => {
+      const response = await productServices.getCategories();
+      setCategories(response);
+    };
+
     getProducts();
     getCategories();
   }, []);
-
-  const getProducts = async () => {
-    const response = await productServices.getProducts();
-    setProducts(response);
-  };
-
-  const getCategories = async () => {
-    const response = await productServices.getCategories();
-    setCategories(response);
-  };
 
   const filteredProductsByTitle = (products, searchByTitle) => {
     return products?.filter((product) =>
@@ -139,6 +133,17 @@ export const StoreProvider = ({ children }) => {
   const toggleCheckoutSideMenu = () =>
     setIsCheckoutSideMenuOpen(!isCheckoutSideMenuOpen);
 
+  const handleSignOut = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+      setIsAuthenticated(false);
+      setAccount({});
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   const value = useMemo(
     () => ({
       products,
@@ -165,8 +170,9 @@ export const StoreProvider = ({ children }) => {
       setCategories,
       account,
       setAccount,
-      signOut,
-      setSignOut,
+      isAuthenticated,
+      setIsAuthenticated,
+      handleSignOut,
     }),
     [
       products,
@@ -191,8 +197,9 @@ export const StoreProvider = ({ children }) => {
       setCategories,
       account,
       setAccount,
-      signOut,
-      setSignOut,
+      isAuthenticated,
+      setIsAuthenticated,
+      handleSignOut,
     ]
   );
 

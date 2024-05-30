@@ -5,7 +5,7 @@ import { BrowserRouter, useRoutes } from "react-router-dom";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
 import MyOrder from "../MyOrder";
-import SignIn from "../SignIn";
+import SignIn from "../SignIn/WithEmailAndPassword";
 import SignUp from "../SignUp";
 import MyOrders from "../MyOrders";
 import NotFound from "../NotFound";

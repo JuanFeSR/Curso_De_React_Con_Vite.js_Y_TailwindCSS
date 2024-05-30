@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { auth } from "../../api/Firebase/Config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import userServices from "../../api/Firebase/Services";
+import Layout from "../../../Components/Layout/index";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import { MdEmail } from "react-icons/md";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import Layout from "../../Components/Layout/index";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../api/Firebase/Config";
+import GoogleSignInButton from "../WithGoogle/index";
 
-function SignUp() {
+function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -18,30 +18,20 @@ function SignUp() {
     setShowPassword(!showPassword);
   };
 
-  const signUp = async (values) => {
+  const signIn = async (values) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      const userCredential = await signInWithEmailAndPassword(
         auth,
         values.email,
         values.password
       );
-
-      const creationDate = new Date();
-
-      const userData = {
-        email: userCredential.user.email,
-        phoneNumber: userCredential.user.phoneNumber,
-        uid: userCredential.user.uid,
-        creationDate: creationDate,
-      };
-
-      await userServices.createUser(userData);
-
-      navigate("/SignIn");
+      const user = userCredential.user;
+      console.log(`Usuario autenticado: ${user.email}`);
+      navigate("/");
     } catch (error) {
-      console.error("Error during sign up:", error);
-      if (error.code === "auth/email-already-in-use") {
-        setErrorMessage("This email address is not available.");
+      console.error("Error during sign in:", error);
+      if (error.code === "auth/invalid-credential") {
+        setErrorMessage("Wrong username and/or password.");
       } else {
         setErrorMessage("An unexpected error occurred. Please try again.");
       }
@@ -52,32 +42,21 @@ function SignUp() {
     email: Yup.string()
       .email("Invalid email!")
       .required("Please enter your email address!"),
-    password: Yup.string()
-      .min(8, "Password is too short!")
-      .required("Please enter a password!"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match!")
-      .required("Please confirm your password."),
-    agree: Yup.boolean().oneOf([true], "Required!"),
+    password: Yup.string().required("Please enter your password!"),
   });
 
   return (
     <Layout>
       <div className="bg-transparent border rounded-lg mt-20 p-6 shadow-lg">
         <h1 className="font-bold text-xl text-center mb-6 w-80">
-          Welcome to Shopi!
+          Sign in to Shopi
         </h1>
         <Formik
-          initialValues={{
-            email: "",
-            password: "",
-            confirmPassword: "",
-            agree: false,
-          }}
+          initialValues={{ email: "", password: "" }}
           validationSchema={validationSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={signUp}
+          onSubmit={signIn}
         >
           {({ setFieldValue }) => (
             <Form className="flex flex-col w-80">
@@ -131,73 +110,51 @@ function SignUp() {
                   className="text-red-500 text-sm mt-1"
                 />
               </div>
-              <div className="relative mb-4">
-                <label className="block font-semibold mb-2">
-                  Confirm Password
-                </label>
-                <div className="relative flex items-center">
-                  <Field
-                    type={showPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    className="block w-full px-3 py-2 border rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-400 pr-10"
-                    onChange={(e) => {
-                      setFieldValue("confirmPassword", e.target.value);
-                      setErrorMessage("");
-                    }}
-                  />
-                  {showPassword ? (
-                    <FaRegEye
-                      className="absolute right-3 text-gray-600 active:text-gray-800 cursor-pointer"
-                      onClick={toggleShowPassword}
-                    />
-                  ) : (
-                    <FaRegEyeSlash
-                      className="absolute right-3 text-gray-600 active:text-gray-800 cursor-pointer"
-                      onClick={toggleShowPassword}
-                    />
-                  )}
-                </div>
-                <ErrorMessage
-                  name="confirmPassword"
-                  component="div"
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
               {errorMessage && (
                 <div className="text-red-500 text-sm mb-2">{errorMessage}</div>
               )}
-              <div>
+              <div className="flex justify-between items-center">
                 <label>
                   <Field
                     type="checkbox"
-                    name="agree"
+                    name="remember"
                     className="text-sm mr-2"
                   />
-                  I agree to the terms & conditions
+                  Remember me
                 </label>
-                <ErrorMessage
-                  name="agree"
-                  component="div"
-                  className="text-red-500 text-sm mt-1"
-                />
+                <a
+                  href="#"
+                  className="font-medium text-sm underline hover:text-blue-500 active:text-blue-700"
+                >
+                  Forgot password?
+                </a>
               </div>
               <div className="flex justify-center">
                 <button
                   type="submit"
                   className="w-2/3 m-4 rounded-xl p-2 text-white bg-black hover:bg-gray-800 active:bg-gray-600 focus:outline-none"
                 >
-                  Sign Up
+                  Sign In
                 </button>
               </div>
               <p>
-                Already have an account?
+                Don't have an account?
                 <Link
-                  to="/SignIn"
+                  to="/SignUp"
                   className="font-medium ml-1 underline text-sm hover:text-blue-500 active:text-blue-700"
                 >
-                  Sign In
+                  Sign Up
                 </Link>
               </p>
+              <div className="flex items-center my-4">
+                <div className="flex-grow h-px bg-gray-300"></div>
+                <span className="mx-4">or</span>
+                <div className="flex-grow h-px bg-gray-300"></div>
+              </div>
+
+              <div className="flex justify-center">
+                <GoogleSignInButton />
+              </div>
             </Form>
           )}
         </Formik>
@@ -206,4 +163,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignIn;
