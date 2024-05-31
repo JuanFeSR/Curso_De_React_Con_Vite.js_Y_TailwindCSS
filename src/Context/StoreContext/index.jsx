@@ -10,6 +10,7 @@ export const StoreProvider = ({ children }) => {
   const [account, setAccount] = useState({});
   // Athentication
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   // Products from API
   const [products, setProducts] = useState(null);
@@ -134,6 +135,8 @@ export const StoreProvider = ({ children }) => {
     setIsCheckoutSideMenuOpen(!isCheckoutSideMenuOpen);
 
   const handleSignOut = async () => {
+    setIsSigningOut(true);
+
     try {
       const auth = getAuth();
       await signOut(auth);
@@ -173,6 +176,7 @@ export const StoreProvider = ({ children }) => {
       isAuthenticated,
       setIsAuthenticated,
       handleSignOut,
+      isSigningOut,
     }),
     [
       products,
@@ -200,6 +204,7 @@ export const StoreProvider = ({ children }) => {
       isAuthenticated,
       setIsAuthenticated,
       handleSignOut,
+      isSigningOut,
     ]
   );
 

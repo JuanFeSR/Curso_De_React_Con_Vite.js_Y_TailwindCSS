@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useStoreContext } from "../../Context/StoreContext";
+import "./styles.css";
 
 function Navbar() {
   const {
@@ -23,6 +25,22 @@ function Navbar() {
     { name: "MyOrders", to: "/MyOrders", className: "" },
     { name: "MyAccount", to: "/MyAccount", className: "" },
   ];
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignOutWithLoading = async () => {
+    setIsLoading(true);
+
+    try {
+      await handleSignOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+  };
 
   const renderView = () => {
     if (!isAuthenticated) {
@@ -53,7 +71,10 @@ function Navbar() {
             </li>
           ))}
           <li>
-            <button onClick={() => handleSignOut()} className={activeStyle}>
+            <button
+              onClick={() => handleSignOutWithLoading()}
+              className={activeStyle}
+            >
               Sign Out
             </button>
           </li>
@@ -109,6 +130,11 @@ function Navbar() {
           </div>
         </li>
       </ul>
+      {isLoading && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black opacity-50 z-50">
+          <span className="loader" size="xl" color="white" />
+        </div>
+      )}
     </nav>
   );
 }
