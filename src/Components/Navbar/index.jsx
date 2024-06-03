@@ -27,6 +27,7 @@ function Navbar() {
   ];
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSignOutWithLoading = async () => {
     setIsLoading(true);
@@ -40,6 +41,19 @@ function Navbar() {
         setIsLoading(false);
       }, 2000);
     }
+  };
+
+  const handleSignOutConfirmation = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmSignOut = () => {
+    setIsModalOpen(false);
+    handleSignOutWithLoading();
   };
 
   const renderView = () => {
@@ -71,10 +85,7 @@ function Navbar() {
             </li>
           ))}
           <li>
-            <button
-              onClick={() => handleSignOutWithLoading()}
-              className={activeStyle}
-            >
+            <button onClick={handleSignOutConfirmation} className={activeStyle}>
               Sign Out
             </button>
           </li>
@@ -133,6 +144,28 @@ function Navbar() {
       {isLoading && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black opacity-50 z-50">
           <span className="loader" size="xl" color="white" />
+        </div>
+      )}
+      {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+          <div className="relative bg-white p-4 rounded shadow-lg z-10">
+            <h2>Are you sure you want to sign out?</h2>
+            <div className="flex justify-end gap-4 mt-4">
+              <button
+                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                onClick={closeModal}
+              >
+                No
+              </button>
+              <button
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                onClick={confirmSignOut}
+              >
+                Yes
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </nav>

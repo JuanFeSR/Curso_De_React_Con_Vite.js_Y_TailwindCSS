@@ -5,13 +5,17 @@ import * as Yup from "yup";
 import { MdEmail } from "react-icons/md";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../../api/Firebase/Config";
 import GoogleSignInButton from "../WithGoogle/index";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [emailForReset, setEmailForReset] = useState("");
   const navigate = useNavigate();
 
   const toggleShowPassword = () => {
@@ -35,6 +39,23 @@ function SignIn() {
       } else {
         setErrorMessage("An unexpected error occurred. Please try again.");
       }
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    if (!emailForReset) {
+      setErrorMessage(
+        "Please enter your email address to reset your password."
+      );
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, emailForReset);
+      setErrorMessage("Password reset email sent. Please check your inbox.");
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      setErrorMessage("Failed to send password reset email. Please try again.");
     }
   };
 
@@ -69,6 +90,7 @@ function SignIn() {
                     className="block w-full px-3 py-2 border rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-400 pr-10"
                     onChange={(e) => {
                       setFieldValue("email", e.target.value);
+                      setEmailForReset(e.target.value);
                       setErrorMessage("");
                     }}
                   />
@@ -124,6 +146,7 @@ function SignIn() {
                 </label>
                 <a
                   href="#"
+                  onClick={handlePasswordReset}
                   className="font-medium text-sm underline hover:text-blue-500 active:text-blue-700"
                 >
                   Forgot password?
