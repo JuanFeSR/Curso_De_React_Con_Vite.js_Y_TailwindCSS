@@ -2,12 +2,14 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import productServices from "../../api/ProductsApi/index";
 import PropTypes from "prop-types";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import userServices from "../../api/Firebase/Services/index";
 
 export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
   // My Account
   const [account, setAccount] = useState({});
+  const [userData, setUserData] = useState(null);
   // Athentication
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -47,13 +49,21 @@ export const StoreProvider = ({ children }) => {
       if (user) {
         setIsAuthenticated(true);
         setAccount(user);
+        getUserData(user.uid);
+        console.log("user", user);
       } else {
         setIsAuthenticated(false);
+        console.log("hola mundo");
         setAccount({});
       }
     });
     return () => unsubscribe();
   }, []);
+
+  const getUserData = async (uid) => {
+    const response = await userServices.getUser(uid);
+    setUserData(response);
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -142,6 +152,7 @@ export const StoreProvider = ({ children }) => {
       await signOut(auth);
       setIsAuthenticated(false);
       setAccount({});
+      setUserData(null);
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -177,6 +188,9 @@ export const StoreProvider = ({ children }) => {
       setIsAuthenticated,
       handleSignOut,
       isSigningOut,
+      userData,
+      setUserData,
+      getUserData,
     }),
     [
       products,
@@ -205,6 +219,9 @@ export const StoreProvider = ({ children }) => {
       setIsAuthenticated,
       handleSignOut,
       isSigningOut,
+      userData,
+      setUserData,
+      getUserData,
     ]
   );
 

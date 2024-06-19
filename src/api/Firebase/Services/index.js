@@ -1,4 +1,13 @@
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../Config/index";
 
 const createUser = async (data) => {
@@ -28,4 +37,40 @@ const getUser = async (uid) => {
   }
 };
 
-export default { createUser, getUser };
+const updateUser = async (uid, data) => {
+  try {
+    const usersRef = collection(db, "users");
+
+    const q = query(usersRef, where("uid", "==", uid));
+
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const docId = querySnapshot.docs[0].id;
+
+      await updateDoc(doc(db, "users", docId), data);
+
+      console.log(`User with uid ${uid} updated successfully`);
+    } else {
+      console.log(`No user found with uid ${uid}`);
+    }
+  } catch (error) {
+    console.error("Error updating user: ", error);
+  }
+};
+
+const createOrders = async (data) => {
+  try {
+    const docRef = await addDoc(collection(db, "orders"), data);
+    const newOrder = await getDoc(docRef);
+    return {
+      id: docRef.id,
+      ...newOrder.data(),
+    };
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error;
+  }
+};
+
+export default { createUser, getUser, updateUser, createOrders };
